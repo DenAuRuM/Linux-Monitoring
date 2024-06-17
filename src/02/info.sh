@@ -1,0 +1,18 @@
+#!/bin/bash
+
+hostname=$(hostname)
+timezone=$(timedatectl | grep zone: | awk '{print $3}')" UTC "$(date +"%:::z")
+user=$(whoami)
+os=$(lsb_release -ds)
+date=$(zdump EST | awk '{print $4, $3, $6, $5}')
+uptime=$(uptime -p)
+uptime_sec=$(awk '{print $1}' /proc/uptime)
+ip=$(hostname -I)
+mask=$(ip a | grep inet | grep brd | awk '{print $4}')
+gateway=$(ip rout | grep default | awk '{print $3}')
+ram_total=$(free -m | awk '/Mem/{printf("%.3f GB", $2 / 1024)}')
+ram_used=$(free -m | awk '/Mem/{printf("%.3f GB", $3 / 1024)}')
+ram_free=$(free -m | awk '/Mem/{printf("%.3f GB", $4 / 1024)}')
+space_root=$(df -BK / | grep / | awk '{ printf("%.3f MB", $2 / 1024)}')
+space_root_used=$(df -BK / | grep / | awk '{ printf("%.3f MB", $3 / 1024)}')
+space_root_free=$(df -BK / | grep / | awk '{ printf("%.3f MB", $4 / 1024)}')
